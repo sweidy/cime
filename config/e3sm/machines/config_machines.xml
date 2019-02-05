@@ -733,6 +733,7 @@
       <env name="NETCDF_PATH">/soft/apps/packages/climate/netcdf/4.4.1c-4.2cxx-4.4.4f-parallel/mpich-3.3.2/gcc-8.2.0</env>
       <!-- We currently don't have a soft env for pnetcdf built with mpich 3.3.2 and gcc 8.2.0 -->
       <env name="PNETCDF_PATH">/soft/apps/packages/climate/pnetcdf/1.12.0/mpich-3.3.2/gcc-8.2.0</env>
+      <env name="ADIOS_PATH">/soft/apps/packages/climate/adios/1.13.1/gcc-6.2.0</env>
     </environment_variables>
     <environment_variables SMP_PRESENT="TRUE">
       <env name="OMP_STACKSIZE">64M</env>
