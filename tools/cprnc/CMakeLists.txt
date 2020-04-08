@@ -46,9 +46,14 @@ SET (CPRNC_SRCS
 ADD_EXECUTABLE(cprnc ${CPRNC_SRCS})
 ADD_DEPENDENCIES(cprnc COMPARE_VARS)
 
+# Use nf-config --flibs output if the command worked, otherwise use
+# NetCDF_Fortran_LIBRARIES (comes from find_package(NetCDF))
+#
+# Also, note that we want to link netcdf stuff statically so that the
+# executable will work regardless of which modules are loaded.
 if (NF_CONFIG_RESULT STREQUAL "0")
   separate_arguments(NF_CONFIG_LIST UNIX_COMMAND "${NF_CONFIG_OUTPUT}")
-  target_link_libraries(cprnc ${NF_CONFIG_LIST})
+  target_link_libraries(cprnc -static ${NF_CONFIG_LIST})
 else()
-  target_link_libraries(cprnc ${NetCDF_Fortran_LIBRARIES} )
+  target_link_libraries(cprnc -static ${NetCDF_Fortran_LIBRARIES})
 endif()
