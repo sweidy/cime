@@ -13,15 +13,15 @@ MERGE_TAG_PREFIX = "to-acme-"
 def setup():
 ###############################################################################
     run_cmd_no_fail("git config merge.renameLimit 999999")
-    run_cmd_no_fail("git checkout master && git pull && git submodule sync && git submodule update --init", verbose=True)
+    run_cmd_no_fail("git checkout master && git pull && git submodule sync && git submodule update --init", verbose=True, timeout=60)
 
     remotes = run_cmd_no_fail("git remote")
     if ESMCI_REMOTE_NAME not in remotes:
-        run_cmd_no_fail("git remote add {} {}".format(ESMCI_REMOTE_NAME, ESMCI_URL), verbose=True)
+        run_cmd_no_fail("git remote add {} {}".format(ESMCI_REMOTE_NAME, ESMCI_URL), verbose=True, timeout=60)
 
     for origin in ["origin", ESMCI_REMOTE_NAME]:
-        run_cmd_no_fail("git fetch --prune {}".format(origin), verbose=True)
-        run_cmd_no_fail("git fetch --prune {} --tags".format(origin), verbose=True)
+        run_cmd_no_fail("git fetch --prune {}".format(origin), verbose=True, timeout=60)
+        run_cmd_no_fail("git fetch --prune {} --tags".format(origin), verbose=True, timeout-60)
 
     run_cmd_no_fail("git clean -fd", verbose=True)
 
@@ -216,7 +216,7 @@ def handle_conflicts(is_merge=False, auto_conf=False):
 def do_subtree_pull(squash=False, auto_conf=False):
 ###############################################################################
     stat = run_cmd("git subtree pull {} --prefix=cime {} master".format("--squash" if squash else "", ESMCI_REMOTE_NAME),
-                   verbose=True)[0]
+                   verbose=True, timeout=60)[0]
     if stat != 0:
         handle_conflicts(is_merge=True, auto_conf=auto_conf)
 
