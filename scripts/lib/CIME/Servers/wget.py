@@ -38,7 +38,7 @@ class WGET(GenericServer):
 
     def fileexists(self, rel_path):
         full_url = os.path.join(self._server_loc, rel_path)
-        stat, out, err = run_cmd("wget {} --spider {}".format(self._args, full_url))
+        stat, out, err = run_cmd("wget {} --spider {}".format(self._args, full_url), timeout=60)
 
         if (stat != 0):
             logging.warning("FAIL: Repo '{}' does not have file '{}'\nReason:{}\n{}\n".format(self._server_loc, full_url, out, err))
@@ -48,7 +48,7 @@ class WGET(GenericServer):
     def getfile(self, rel_path, full_path):
         full_url = os.path.join(self._server_loc, rel_path)
         stat, output, errput = \
-                run_cmd("wget {} {} -nc --output-document {}".format(self._args, full_url, full_path))
+                run_cmd("wget {} {} -nc --output-document {}".format(self._args, full_url, full_path), timeout=60)
         if (stat != 0):
             logging.warning("wget failed with output: {} and errput {}\n".format(output, errput))
             # wget puts an empty file if it fails.
@@ -64,7 +64,7 @@ class WGET(GenericServer):
     def getdirectory(self, rel_path, full_path):
         full_url = os.path.join(self._server_loc, rel_path)
         stat, output, errput = \
-            run_cmd("wget  {} {} -r -N --no-directories ".format(self._args, full_url+os.sep), from_dir=full_path)
+            run_cmd("wget  {} {} -r -N --no-directories ".format(self._args, full_url+os.sep), from_dir=full_path, timeout=60)
         logger.debug(output)
         logger.debug(errput)
         if (stat != 0):
