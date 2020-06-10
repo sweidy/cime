@@ -163,12 +163,12 @@ AR ?= ar
 ARFLAGS ?= -r
 
 ifeq ($(PIO_VERSION),2)
-  ifdef ADIOS_PATH
-    ifndef INC_ADIOS
-      INC_ADIOS:=$(ADIOS_PATH)/include
+  ifdef ADIOS2_DIR
+    ifndef INC_ADIOS2
+      INC_ADIOS2:=$(ADIOS2_DIR)/include
     endif
-    ifndef LIB_ADIOS
-      LIB_ADIOS:=$(ADIOS_PATH)/lib
+    ifndef LIB_ADIOS2
+      LIB_ADIOS2:=$(ADIOS2_DIR)/lib
     endif
   endif
 endif
@@ -320,9 +320,9 @@ ifdef LIB_PNETCDF
    SLIBS += -L$(LIB_PNETCDF) -lpnetcdf
 endif
 
-ifdef LIB_ADIOS
-   CPPDEFS += -D_ADIOS
-   SLIBS += -L$(LIB_ADIOS)
+ifdef LIB_ADIOS2
+   CPPDEFS += -D_ADIOS2
+   SLIBS += -L$(LIB_ADIOS2)
 endif
 
 # Set esmf.mk location with ESMF_LIBDIR having precedence over ESMFMKFILE
@@ -491,8 +491,8 @@ endif
 ifdef INC_PNETCDF
   INCLDIR += -I$(INC_PNETCDF)
 endif
-ifdef INC_ADIOS
-  INCLDIR += -I$(INC_ADIOS)
+ifdef INC_ADIOS2
+  INCLDIR += -I$(INC_ADIOS2)
 endif
 ifdef INC_PETSC
   INCLDIR += -I$(INC_PETSC)
@@ -739,7 +739,7 @@ endif
 #endif
 
 ifeq ($(PIO_VERSION),2)
-  #ifdef ADIOS_PATH
+  #ifdef ADIOS2_DIR
     PIOLIB += $(PIO_LIBDIR)/tools/adios2pio-nm/libadios2pio-nm-lib.a
     PIOLIBNAME += -ladios2pio-nm-lib
   #endif
@@ -797,9 +797,8 @@ ifeq ($(MPILIB),mpi-serial)
 	CMAKE_OPTS += -D PIO_USE_MPISERIAL=TRUE -D MPISERIAL_PATH=$(INSTALL_SHAREDPATH)
 endif
 
-ifdef ADIOS_PATH
-  CMAKE_OPTS += -DWITH_ADIOS:BOOL=TRUE \
-                -DADIOS_DIR:PATH="$(ADIOS_PATH)"
+ifdef ADIOS2_DIR
+  CMAKE_OPTS += -DWITH_ADIOS2:BOOL=TRUE
 endif
 
 # This captures the many cism-specific options to cmake

@@ -125,7 +125,7 @@ def buildlib(bldroot, installpath, case):
         pnetcdf_string = "PnetCDF_C_LIBRARY-ADVANCED"
         netcdf4_string = "NetCDF_C_HAS_PARALLEL:BOOL=TRUE"
 
-    adios_string = "ADIOS_FOUND:BOOL=TRUE"
+    adios_string = "WITH_ADIOS2:BOOL=TRUE"
     expect_string_found = False
     pnetcdf_found = False
     netcdf4_parallel_found = False
