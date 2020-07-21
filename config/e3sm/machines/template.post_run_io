@@ -51,9 +51,6 @@ OR
     if args.caseroot is not None:
         os.chdir(args.caseroot)
 
-    if args.skip_preview_namelist is None:
-        args.skip_preview_namelist = False
-
     return args.caseroot
 
 ###############################################################################
