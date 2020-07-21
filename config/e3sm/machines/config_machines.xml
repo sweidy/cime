@@ -1080,6 +1080,15 @@
     <environment_variables mpilib="!mpi-serial">
       <env name="PNETCDF_PATH">$SHELL{dirname $(dirname $(which pnetcdf_version))}</env>
     </environment_variables>
+    <environment_variables compiler="intel" mpilib="mvapich">
+      <env name="ADIOS2_DIR">/lcrc/group/acme/3rdparty/anvil/adios2/2.5.0/mvapich2-2.2/intel-17.0.0</env>
+    </environment_variables>
+    <environment_variables compiler="intel18" mpilib="mvapich">
+      <env name="ADIOS2_DIR">/lcrc/group/acme/3rdparty/anvil/adios2/2.5.0/mvapich2-2.2/intel-18.0.4</env>
+    </environment_variables>
+    <environment_variables compiler="gnu" mpilib="mvapich">
+      <env name="ADIOS2_DIR">/lcrc/group/acme/3rdparty/anvil/adios2/2.5.0/mvapich2-2.2/gcc-8.2.0</env>
+    </environment_variables>
     <environment_variables mpilib="mvapich">
       <env name="MV2_ENABLE_AFFINITY">0</env>
       <env name="MV2_SHOW_CPU_BINDING">1</env>
