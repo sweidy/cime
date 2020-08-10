@@ -38,6 +38,16 @@ def _convert_adios_to_nc(case):
     adios_conv_tool_cmd_suffix = adios_conv_tool_cmd_suffix.replace(
                                   "e3sm.log", "e3sm_adios_post_io.log")
 
+    # Reset the total number of tasks to 1/2 for the conversion job
+    CONV_JOB_SCALE_FACTOR = 1.0/2.0
+    env_mach_pes = case.get_env("mach_pes")
+    case.thread_count = 1
+    case.total_tasks = int(case.total_tasks * CONV_JOB_SCALE_FACTOR if case.total_tasks * CONV_JOB_SCALE_FACTOR > 1 else 1)
+    case.cores_per_task = 1
+    case.tasks_per_node = env_mach_pes.get_tasks_per_node(case.total_tasks, case.thread_count)
+    case.num_nodes, case.spare_nodes = env_mach_pes.get_total_nodes(case.total_tasks, case.thread_count)
+    case.num_nodes += case.spare_nodes
+
     # Get the current mpirun command (for e3sm.exe)
     cmd = case.get_mpirun_cmd(allow_unresolved_envvars=False)
 
