@@ -73,8 +73,7 @@ def case_post_run_io(self):
     success = True
     has_adios = False
     self.load_env(job="case.post_run_io")
-    component_classes = [ "ATM", "CPL", "OCN", "WAV", "GLC", "ICE",
-                          "ROF", "LND", "ESP" ]
+    component_classes = self.get_values("COMP_CLASSES")
     # Check if user chose "adios" as the iotype for any component
     for compclass in component_classes:
         key = "PIO_TYPENAME_{}".format(compclass)
