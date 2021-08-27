@@ -33,7 +33,7 @@ class ERIO(SystemTestsCommon):
         self._case.flush()
 
         expect(self._stop_n > 2, "ERROR: stop_n value {:d} too short".format(self._stop_n))
-        logger.info("doing an {0} {1} initial test with restart file at {2} {1} with pio type {3}".format(str(self._stop_n), stop_option, str(rest_n), pio_type))
+        logger.info("WPC_1. doing an {0} {1} initial test with restart file at {2} {1} with pio type {3}".format(str(self._stop_n), stop_option, str(rest_n), pio_type))
         self.run_indv(suffix=pio_type)
 
     def _restart_run(self, pio_type, other_pio_type):
@@ -47,13 +47,14 @@ class ERIO(SystemTestsCommon):
         self._case.set_value("CONTINUE_RUN", True)
         self._case.set_value("REST_OPTION","never")
         self._case.flush()
-        logger.info("doing an {} {} restart test with {} against {}".format(str(stop_new), stop_option, pio_type, other_pio_type))
+        logger.info("WPC_2. doing an {} {} restart test with {} against {}".format(str(stop_new), stop_option, pio_type, other_pio_type))
 
         suffix = "{}.{}".format(other_pio_type, pio_type)
         self.run_indv(suffix=suffix)
 
         # Compare restart file
         self._component_compare_test(other_pio_type, suffix)
+        logger.info("WPC_3. doing _component_compare_test with {} against {}".format(other_pio_type, suffix))
 
     def run_phase(self):
 

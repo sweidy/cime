@@ -360,7 +360,7 @@ class SystemTestsCommon(object):
         append_testlog(comments, self._orig_caseroot)
 
         pattern = "*.nc.{}.cprnc.out".format(suffix1)
-        message = "compared suffixes suffix1 {!r} suffix2 {!r}".format(suffix1, suffix2)
+        message = "WPC_3b. compared suffixes suffix1 {!r} suffix2 {!r}. success is {}".format(suffix1, suffix2, success)
 
         self._log_cprnc_output_tail(pattern, message)
 
