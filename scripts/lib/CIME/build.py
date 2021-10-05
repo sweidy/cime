@@ -36,7 +36,7 @@ def generate_makefile_macro(case, caseroot, comp_name):
     expect(os.path.exists(cmake_macro), "Cannot generate Makefile macro without {}".format(cmake_macro))
 
     cmake_args = get_standard_cmake_args(case, "DO_NOT_USE", shared_lib=True)
-    output = run_cmd_no_fail("cmake -DCONVERT_TO_MAKE=ON -DCOMP_NAME={} {} -C Macros.cmake |& grep E3SM_SET_MAKEFILE_VAR | grep -v BUILD_INTERNAL_IGNORE".format(comp_name, cmake_args), from_dir=caseroot)
+    output = run_cmd_no_fail("cmake -DCONVERT_TO_MAKE=ON -DCOMP_NAME={} {} -C Macros.cmake 2>&1 | grep E3SM_SET_MAKEFILE_VAR | grep -v BUILD_INTERNAL_IGNORE".format(comp_name, cmake_args), from_dir=caseroot)
 
     # The Tools/Makefile may have already adding things to CPPDEFS and SLIBS
     real_output = output.replace("E3SM_SET_MAKEFILE_VAR ", "").\
