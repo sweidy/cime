@@ -52,9 +52,9 @@ class ERIO(SystemTestsCommon):
         suffix = "{}.{}".format(other_pio_type, pio_type)
         self.run_indv(suffix=suffix)
 
+        logger.info("WPC_3. doing _component_compare_test with {} against {}".format(other_pio_type, suffix))
         # Compare restart file
         self._component_compare_test(other_pio_type, suffix)
-        logger.info("WPC_3. doing _component_compare_test with {} against {}".format(other_pio_type, suffix))
 
     def run_phase(self):
 
@@ -65,4 +65,5 @@ class ERIO(SystemTestsCommon):
                 for pio_type2 in self._pio_types[idx+1:]:
                     if pio_type2 != "default" and pio_type1 != "nothing":
                         self._case.set_value("PIO_TYPENAME", pio_type2)
-                        self._restart_run(pio_type2, pio_type1)
+                        logger.info("WPC_4. doing run_phase in erio.py with pio_type2 {} against pio_type1 {}".format(pio_type2, pio_type2))
+                        self._restart_run(pio_type2, pio_type2)
