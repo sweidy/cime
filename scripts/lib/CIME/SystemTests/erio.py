@@ -65,7 +65,7 @@ class ERIO(SystemTestsCommon):
                 self._full_run(pio_type1)
                 logger.info("\nWPC_2. Outer. After if != check. pio_type1 is {} idx is {}".format(pio_type1, idx))
                 for pio_type2 in self._pio_types[idx+1:]:
-                    logger.info("\nWPC_3. Inner. pio_type2 is {} idx+1 is {}".format(pio_type2, (idx+1))
+                    logger.info("\nWPC_3. Inner. pio_type2 is {} idx+1 is {}".format(pio_type2, (idx+1)))
                     logger.info("WPC_4a. Inner. doing run_phase in erio.py with pio_type2 != nothing {} and pio_type1 != nothing {}".format((pio_type2 != "nothing"), (pio_type1 != "nothing")))
                     logger.info("WPC_4b. Inner. doing run_phase in erio.py, pre != nothing check, with pio_type2 {} and pio_type1 {}".format(pio_type2, pio_type1))
                     if pio_type2 != "default" and pio_type2 != "nothing":
