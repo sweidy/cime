@@ -63,7 +63,9 @@ class ERIO(SystemTestsCommon):
                 self._case.set_value("PIO_TYPENAME", pio_type1)
                 self._full_run(pio_type1)
                 for pio_type2 in self._pio_types[idx+1:]:
+                    logger.info("WPC_4aa. doing run_phase in erio.py with pio_type2 != nothing {} and pio_type1 != nothing {}".format((pio_type2 != "nothing"), (pio_type1 != "nothing")))
                     if pio_type2 != "default" and pio_type2 != "nothing":
                         self._case.set_value("PIO_TYPENAME", pio_type2)
-                        logger.info("WPC_4. doing run_phase in erio.py with pio_type2 {} against pio_type1 {}".format(pio_type2, pio_type2))
-                        self._restart_run(pio_type2, pio_type2)
+                        logger.info("WPC_4a. doing run_phase in erio.py with type of pio_type2 {} against type of pio_type1 {}".format(type(pio_type2), type(pio_type1)))
+                        logger.info("WPC_4b. doing run_phase in erio.py with pio_type2 {} against pio_type1 {}".format(pio_type2, pio_type1))
+                        self._restart_run(pio_type2, pio_type1)
