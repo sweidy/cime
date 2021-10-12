@@ -33,7 +33,7 @@ class ERIO(SystemTestsCommon):
         self._case.flush()
 
         expect(self._stop_n > 2, "ERROR: stop_n value {:d} too short".format(self._stop_n))
-        logger.info("WPC_1. doing an {0} {1} initial test with restart file at {2} {1} with pio type {3}".format(str(self._stop_n), stop_option, str(rest_n), pio_type))
+        logger.info("WPC_full_run. doing an {0} {1} initial test with restart file at {2} {1} with pio type {3}".format(str(self._stop_n), stop_option, str(rest_n), pio_type))
         self.run_indv(suffix=pio_type)
 
     def _restart_run(self, pio_type, other_pio_type):
@@ -47,27 +47,28 @@ class ERIO(SystemTestsCommon):
         self._case.set_value("CONTINUE_RUN", True)
         self._case.set_value("REST_OPTION","never")
         self._case.flush()
-        logger.info("WPC_2. doing an {} {} restart test with {} against {}".format(str(stop_new), stop_option, pio_type, other_pio_type))
+        logger.info("WPC_restart_run.a doing an {} {} restart test with {} against {}".format(str(stop_new), stop_option, pio_type, other_pio_type))
 
         suffix = "{}.{}".format(other_pio_type, pio_type)
         self.run_indv(suffix=suffix)
 
-        logger.info("WPC_3. doing _component_compare_test with {} against {}".format(other_pio_type, suffix))
+        logger.info("WPC_restart_run.b doing _component_compare_test with {} against {}".format(other_pio_type, suffix))
         # Compare restart file
         self._component_compare_test(other_pio_type, suffix)
 
     def run_phase(self):
-
+        logger.info("WPC_0. doing run_phase in erio.py pio_types are {}".format(self._pio_types))
         for idx, pio_type1 in enumerate(self._pio_types):
+            logger.info("\nWPC_1. Outer. pio_type1 is {} idx is {}".format(pio_type1, idx))
             if pio_type1 != "default" and pio_type1 != "nothing":
                 self._case.set_value("PIO_TYPENAME", pio_type1)
                 self._full_run(pio_type1)
-                logger.info("WPC_4. doing run_phase in erio.py pio_types are {}".format(self._pio_types))
+                logger.info("WPC_2. Outer. After if 1+ check. pio_type1 is {} idx is {}".format(pio_type1, idx))
                 for pio_type2 in self._pio_types[idx+1:]:
-                    logger.info("WPC_4a. doing run_phase in erio.py with pio_type2 != nothing {} and pio_type1 != nothing {}".format((pio_type2 != "nothing"), (pio_type1 != "nothing")))
-                    logger.info("WPC_4b. doing run_phase in erio.py, pre != nothing check, with pio_type2 {} and pio_type1 {}".format(pio_type2, pio_type1))
+                    logger.info("\nWPC_5a. Inner. doing run_phase in erio.py with pio_type2 != nothing {} and pio_type1 != nothing {}".format((pio_type2 != "nothing"), (pio_type1 != "nothing")))
+                    logger.info("WPC_5b. Inner. doing run_phase in erio.py, pre != nothing check, with pio_type2 {} and pio_type1 {}".format(pio_type2, pio_type1))
                     if pio_type2 != "default" and pio_type2 != "nothing":
                         self._case.set_value("PIO_TYPENAME", pio_type2)
-                        logger.info("WPC_4c. doing run_phase in erio.py with type of pio_type2 {} against type of pio_type1 {}".format(type(pio_type2), type(pio_type1)))
-                        logger.info("WPC_4d. doing run_phase in erio.py with pio_type2 {} against pio_type1 {}".format(pio_type2, pio_type1))
+                        logger.info("WPC_6a. doing run_phase in erio.py with type of pio_type2 {} against type of pio_type1 {}".format(type(pio_type2), type(pio_type1)))
+                        logger.info("WPC_6b. doing run_phase in erio.py with pio_type2 {} against pio_type1 {}".format(pio_type2, pio_type1))
                         self._restart_run(pio_type2, pio_type1)
