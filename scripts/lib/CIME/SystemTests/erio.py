@@ -57,7 +57,7 @@ class ERIO(SystemTestsCommon):
         self._component_compare_test(other_pio_type, suffix)
 
     def run_phase(self):
-        logger.info("WPC_0. doing run_phase in erio.py pio_types are {}".format(self._pio_types))
+        logger.info("WPC_0. in run_phase in erio.py pio_types are {}".format(self._pio_types))
         for idx, pio_type1 in enumerate(self._pio_types):
             logger.info("\nWPC_1. Outer. pio_type1 is {} idx is {}".format(pio_type1, idx))
             if pio_type1 != "default" and pio_type1 != "nothing":
@@ -66,11 +66,12 @@ class ERIO(SystemTestsCommon):
                 logger.info("\nWPC_2. Outer. After if != check. pio_type1 is {} idx is {}".format(pio_type1, idx))
                 for pio_type2 in self._pio_types[idx+1:]:
                     logger.info("\nWPC_3. Inner. pio_type2 is {} idx+1 is {}".format(pio_type2, (idx+1)))
-                    logger.info("WPC_4a. Inner. doing run_phase in erio.py with pio_type2 != nothing {} and pio_type1 != nothing {}".format((pio_type2 != "nothing"), (pio_type1 != "nothing")))
-                    logger.info("WPC_4b. Inner. doing run_phase in erio.py, pre != nothing check, with pio_type2 {} and pio_type1 {}".format(pio_type2, pio_type1))
+                    logger.info("WPC_4a. Inner. in run_phase in erio.py with pio_type2 != nothing {} and pio_type1 != nothing {}".format((pio_type2 != "nothing"), (pio_type1 != "nothing")))
+                    logger.info("WPC_4b. Inner. in run_phase in erio.py, pre != nothing check, with pio_type2 {} and pio_type1 {}".format(pio_type2, pio_type1))
                     if pio_type2 != "default" and pio_type2 != "nothing":
                         self._case.set_value("PIO_TYPENAME", pio_type2)
-                        logger.info("\nWPC_5a. doing run_phase in erio.py with type of pio_type2 {} against type of pio_type1 {}".format(type(pio_type2), type(pio_type1)))
-                        logger.info("WPC_5b. doing run_phase in erio.py with pio_type2 {} against pio_type1 {}".format(pio_type2, pio_type1))
+                        logger.info("\nWPC_5a. Inner. After if != check. pio_type2 is {} idx is {}".format(pio_type2, idx))
+                        logger.info("WPC_5b. in run_phase in erio.py with type of pio_type2 {} against type of pio_type1 {}".format(type(pio_type2), type(pio_type1)))
+                        logger.info("WPC_5c. in run_phase in erio.py. pre _restart_run with pio_type2 {} against pio_type1 {}".format(pio_type2, pio_type1))
                         self._restart_run(pio_type2, pio_type1)
-                        logger.info("WPC_6. Inner. After if != check. pio_type2 is {} idx is {}".format(pio_type2, idx))
+                        logger.info("WPC_5d. in run_phase in erio.py. post _restart_run with pio_type2 {} against pio_type1 {}".format(pio_type2, pio_type1))
