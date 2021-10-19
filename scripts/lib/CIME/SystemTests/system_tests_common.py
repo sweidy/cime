@@ -331,9 +331,9 @@ class SystemTestsCommon(object):
 
         for output in cprnc_logs:
             with open(output) as fin:
-                cprnc_log_tail = fin.readlines()[-20:]
+                cprnc_log_tail = fin.readlines()[-40:]
             
-            cprnc_log_tail.insert(0, "tail -n20 {}\n\n".format(output))
+            cprnc_log_tail.insert(0, "tail -n40 {}\n\n".format(output))
 
             if prepend is not None:
                 cprnc_log_tail.insert(0, "{}\n\n".format(prepend))
