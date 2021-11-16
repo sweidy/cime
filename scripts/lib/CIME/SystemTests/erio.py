@@ -16,8 +16,8 @@ class ERIO(SystemTestsCommon):
         """
         SystemTestsCommon.__init__(self, case, expected=["TEST"])
 
-        self._pio_types = self._case.get_env("run").get_valid_values("PIO_TYPENAME")
-        #self._pio_types = ['netcdf4c', 'netcdf4p', 'nothing']
+        #self._pio_types = self._case.get_env("run").get_valid_values("PIO_TYPENAME")
+        self._pio_types = ['netcdf4p', 'netcdf', 'nothing']
         self._stop_n = self._case.get_value("STOP_N")
 
     def _full_run(self, pio_type):
