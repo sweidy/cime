@@ -57,6 +57,7 @@ module ESMF_ClockMod
   type ESMF_ClockInt
      type(ESMF_TimeInterval) :: TimeStep
      type(ESMF_Time)  :: StartTime
+     type(ESMF_Time)  :: ContinueTime
      type(ESMF_Time)  :: StopTime
      type(ESMF_Time)  :: RefTime
      type(ESMF_Time)  :: CurrTime
@@ -71,7 +72,7 @@ module ESMF_ClockMod
      ! as hideous as it might be because the ESMF_Alarm type
      ! has data members that are all POINTERs (thus the horrible
      ! shallow-copy-masquerading-as-reference-copy hack works).
-     type(ESMF_Alarm), pointer, dimension(:) :: AlarmList => null()
+     type(ESMF_Alarm), pointer, dimension(:) :: AlarmList  ! deleted null() sweidman
   end type ESMF_ClockInt
 
   ! Actual public type:  this bit allows easy mimic of "deep" ESMF_ClockCreate
@@ -79,7 +80,7 @@ module ESMF_ClockMod
   ! NOTE:  DO NOT ADD NON-POINTER STATE TO THIS DATA TYPE.  It emulates ESMF
   !        shallow-copy-masquerading-as-reference-copy.
   type ESMF_Clock
-     type(ESMF_ClockInt), pointer  :: clockint => null()
+     type(ESMF_ClockInt), pointer  :: clockint  ! deleted null() sweidman
   end type ESMF_Clock
 
   !------------------------------------------------------------------------------
@@ -141,12 +142,13 @@ contains
 
   ! !INTERFACE:
   subroutine ESMF_ClockSetOLD(clockint, TimeStep, StartTime, &
-       StopTime, RefTime, rc)
+      ContinueTime, StopTime, RefTime, rc)
 
     ! !ARGUMENTS:
     type(ESMF_ClockInt), intent(out) :: clockint
     type(ESMF_TimeInterval), intent(in), optional :: TimeStep
     type(ESMF_Time), intent(in) :: StartTime
+    type(ESMF_Time), intent(in), optional :: ContinueTime ! sweidman
     type(ESMF_Time), intent(in) :: StopTime
     type(ESMF_Time), intent(in), optional :: RefTime
     integer, intent(out), optional :: rc
@@ -183,6 +185,11 @@ contains
     END IF
     clockint%CurrTime = StartTime
     clockint%StartTime = StartTime
+    IF ( PRESENT(ContinueTime) )THEN ! added - sweidman
+      clockint%ContinueTime = ContinueTime
+    ELSE
+      clockint%ContinueTime = StartTime
+    END IF
     clockint%StopTime = StopTime
     clockint%NumAlarms = 0
     clockint%AdvanceCount = 0
@@ -200,7 +207,7 @@ contains
   ! !IROUTINE: ESMF_ClockSet - Set clock properties -- for compatibility with ESMF 2.0.1
 
   ! !INTERFACE:
-  subroutine ESMF_ClockSet(clock, TimeStep, StartTime, StopTime, &
+  subroutine ESMF_ClockSet(clock, TimeStep, StartTime, ContinueTime, StopTime, &
        RefTime, CurrTime, rc)
 
     ! !ARGUMENTS:
@@ -208,6 +215,7 @@ contains
     type(ESMF_TimeInterval), intent(in), optional :: TimeStep
     type(ESMF_Time), intent(in), optional :: StartTime
     type(ESMF_Time), intent(in), optional :: StopTime
+    type(ESMF_Time), intent(in), optional :: ContinueTime ! sweidman
     type(ESMF_Time), intent(in), optional :: RefTime
     type(ESMF_Time), intent(in), optional :: CurrTime
     integer, intent(out), optional :: rc
@@ -242,6 +250,7 @@ contains
     ENDIF
     IF ( PRESENT(RefTime) ) clock%clockint%RefTime = RefTime
     IF ( PRESENT(StartTime) ) clock%clockint%StartTime = StartTime
+    IF ( PRESENT(ContinueTime) ) clock%clockint%ContinueTime = ContinueTime ! sweidman
     IF ( PRESENT(StopTime) ) clock%clockint%StopTime = StopTime
     IF ( PRESENT(CurrTime) ) THEN
        CALL ESMF_ClockSetCurrTime(clock, CurrTime, rc=ierr)
@@ -252,7 +261,7 @@ contains
 
 
   ! Create ESMF_Clock using ESMF 2.1.0+ semantics
-  FUNCTION ESMF_ClockCreate( name, TimeStep, StartTime, StopTime, &
+  FUNCTION ESMF_ClockCreate( name, TimeStep, StartTime, ContinueTime, StopTime, &
        RefTime, rc )
     ! return value
     type(ESMF_Clock) :: ESMF_ClockCreate
@@ -260,6 +269,7 @@ contains
     character (len=*),       intent(in),  optional :: name
     type(ESMF_TimeInterval), intent(in), optional :: TimeStep
     type(ESMF_Time), intent(in) :: StartTime
+    type(ESMF_Time), intent(in), optional :: ContinueTime
     type(ESMF_Time), intent(in) :: StopTime
     type(ESMF_Time), intent(in), optional :: RefTime
     integer, intent(out), optional :: rc
@@ -270,6 +280,7 @@ contains
     CALL ESMF_ClockSetOLD( clocktmp%clockint,   &
          TimeStep= TimeStep,  &
          StartTime=StartTime, &
+         ContinueTime=ContinueTime, & ! sweidman
          StopTime= StopTime,  &
          RefTime=RefTime, rc=rc )
     ESMF_ClockCreate = clocktmp
@@ -301,7 +312,7 @@ contains
   ! tcraig added alarmCount for ccsm4, consistent with ESMF3 interface
 
   ! !INTERFACE:
-  subroutine ESMF_ClockGet(clock, StartTime, CurrTime,       &
+  subroutine ESMF_ClockGet(clock, StartTime, ContinueTime, CurrTime,       &
        AdvanceCount, StopTime, TimeStep, &
        PrevTime, RefTime, AlarmCount, &
        rc)
@@ -309,6 +320,7 @@ contains
     ! !ARGUMENTS:
     type(ESMF_Clock), intent(in) :: clock
     type(ESMF_Time), intent(out), optional :: StartTime
+    type(ESMF_Time), intent(out), optional :: ContinueTime
     type(ESMF_Time), intent(out), optional :: CurrTime
     type(ESMF_Time), intent(out), optional :: StopTime
     type(ESMF_Time), intent(out), optional :: PrevTime
@@ -354,6 +366,9 @@ contains
 
     IF ( PRESENT (StartTime) ) THEN
        CALL ESMF_ClockGetStartTime( clock, StartTime=StartTime, rc=ierr )
+    ENDIF
+    IF ( PRESENT (ContinueTime) ) THEN ! added - sweidman
+      CALL ESMF_ClockGetContinueTime( clock, ContinueTime, rc=ierr)
     ENDIF
     IF ( PRESENT (CurrTime) ) THEN
        CALL ESMF_ClockGetCurrTime( clock , CurrTime, ierr )
@@ -460,7 +475,7 @@ contains
   subroutine ESMF_ClockSetTimeStep(clock, TimeStep, rc)
 
     ! !ARGUMENTS:
-    type(ESMF_Clock), intent(inout) :: clock
+    type(ESMF_Clock), intent(out) :: clock ! changed to out - sweidman
     type(ESMF_TimeInterval), intent(in) :: TimeStep
     integer, intent(out), optional      :: rc
 
@@ -527,7 +542,7 @@ contains
   subroutine ESMF_ClockSetCurrTime(clock, CurrTime, rc)
 
     ! !ARGUMENTS:
-    type(ESMF_Clock), intent(inout) :: clock
+    type(ESMF_Clock), intent(out) :: clock ! changed to out - sweidman
     type(ESMF_Time), intent(in) :: CurrTime
     integer, intent(out), optional :: rc
 
@@ -586,6 +601,39 @@ contains
     IF ( PRESENT(rc) ) rc = ESMF_SUCCESS
 
   end subroutine ESMF_ClockGetStartTime
+
+!BOP - sweidman
+! !IROUTINE: ESMF_ClockGetContinueTime - Get a clock's start time
+
+! !INTERFACE:
+  subroutine ESMF_ClockGetContinueTime(clock, ContinueTime, rc)
+
+   ! !ARGUMENTS:
+         type(ESMF_Clock), intent(in) :: clock
+         type(ESMF_Time), intent(out) :: ContinueTime
+         integer, intent(out), optional :: rc
+   
+   ! !DESCRIPTION:
+   !     Get an {\tt ESMF\_Clock}'s start time
+   !
+   !     The arguments are:
+   !     \begin{description}
+   !     \item[clock]
+   !          The object instance to get the start time from
+   !     \item[ContinueTime]
+   !          The start time
+   !     \item[{[rc]}]
+   !          Return code; equals {\tt ESMF\_SUCCESS} if there are no errors.
+   !     \end{description}
+   !
+   ! !REQUIREMENTS:
+   !     TMG3.5.3
+   !EOP
+   
+         ContinueTime = clock%clockint%ContinueTime
+         IF ( PRESENT(rc) ) rc = ESMF_SUCCESS
+       
+         end subroutine ESMF_ClockGetContinueTime
 
   !------------------------------------------------------------------------------
   !BOP
@@ -905,7 +953,7 @@ contains
 
   ! !INTERFACE:
   subroutine ESMF_ClockAdvance(clock, RingingAlarmList, &
-       NumRingingAlarms, rc)
+       NumRingingAlarms, rc, is_ocean,is_atm,start_ymd,start_tod,is_initial)
 
     use ESMF_TimeMod
 
@@ -915,6 +963,11 @@ contains
          RingingAlarmList
     integer, intent(out), optional :: NumRingingAlarms
     integer, intent(out), optional :: rc
+    logical, intent(in), optional :: is_ocean ! added - sweidman
+    logical, intent(in), optional :: is_atm
+    integer, intent(in), optional :: start_ymd
+    integer, intent(in), optional :: start_tod
+    logical, intent(in), optional :: is_initial ! end added
     ! Local
     logical pred1, pred2, pred3
     integer i, n
@@ -938,11 +991,135 @@ contains
     ! !REQUIREMENTS:
     !     TMG3.4.1
     !EOP
+    character(len=256) :: rest_date ! added - sweidman
+    integer :: istep, modstep, stepp
+    integer         :: yr, mon, day, tod, truetod     ! Year, month, day, and second as integers
+    type(ESMF_Time) :: start_time            ! start date for run
+    type(ESMF_Time) :: stop_time            ! stop date for run
+    type(ESMF_Time) :: curr_time             ! temporary date used in logic
+    type(ESMF_Time) :: ref_time              ! reference date for time coordinate
+    type(ESMF_TimeInterval) :: time_step     ! timestep size
+    type(ESMF_TimeInterval) :: timestep
+    type(ESMF_Time) :: AdvanceTime
+
+    logical,save :: restart_done=.False.
+    logical,save :: do_restart=.False.
+    logical  :: is_first, is_ocean2
+    integer :: did_restart,count_restart
+    integer :: ocean_count
+    integer :: start_y, start_m, start_d
+
+    type(ESMF_Time) :: CurrTime             ! temporary date used in logic
+    integer, dimension(11) :: monarray
+
+    call ESMF_ClockGet( clock, startTime=start_time, &
+                          stoptime=stop_time, currTime=curr_time, &
+                          refTime=ref_time, timeStep=timestep, rc=rc )
+                            
+    CurrTime = clock%clockint%CurrTime
+    call ESMF_TimeGet(CurrTime, yy=yr, mm=mon, dd=day, s=tod ) ! end added
+
     clock%clockint%CurrTime = clock%clockint%CurrTime + &
          clock%clockint%TimeStep
 
-    IF ( Present(NumRingingAlarms) ) NumRingingAlarms = 0
+    ! IF ( Present(NumRingingAlarms) ) NumRingingAlarms = 0 ! commented - sweidman
     clock%clockint%AdvanceCount = clock%clockint%AdvanceCount + 1
+
+    if (tod==0 .AND. day==1 .AND. mon==1) print*,yr,mon,day ! added - sweidman
+
+   if (present(is_ocean)) then
+      if (.NOT. is_ocean) then
+        is_ocean2=.FALSE.
+      else
+        is_ocean2=.TRUE.
+      endif
+   endif
+
+   if (.NOT. present(is_ocean)) is_ocean2=.FALSE.
+   if (.NOT. present(is_initial)) then
+   if (mod(tod,21600)==10800 .AND. do_restart .AND. .NOT. is_ocean2 ) then 
+   !if new time is at 3-hour mark
+
+      clock%clockint%CurrTime = clock%clockint%CurrTime - clock%clockint%TimeStep
+      clock%clockint%CurrTime = clock%clockint%CurrTime - clock%clockint%TimeStep
+      clock%clockint%CurrTime = clock%clockint%CurrTime - clock%clockint%TimeStep
+      clock%clockint%CurrTime = clock%clockint%CurrTime - clock%clockint%TimeStep
+      clock%clockint%CurrTime = clock%clockint%CurrTime - clock%clockint%TimeStep
+      clock%clockint%CurrTime = clock%clockint%CurrTime - clock%clockint%TimeStep
+      
+      clock%clockint%AdvanceCount = clock%clockint%AdvanceCount-6
+
+
+   restart_done=.TRUE.
+   end if
+
+   monarray=(/31,28,31,30,31,30,31,31,30,31,30/)
+
+   if (is_ocean2 .AND. mod(tod,43200)==0) then
+
+         clock%clockint%CurrTime = clock%clockint%CurrTime - clock%clockint%TimeStep
+         clock%clockint%AdvanceCount = clock%clockint%AdvanceCount-1
+   end if
+
+   CurrTime = clock%clockint%CurrTime
+
+   call ESMF_TimeGet(CurrTime, yy=yr, mm=mon, dd=day, s=tod )
+
+   CurrTime = clock%clockint%CurrTime 
+   TimeStep = clock%clockint%TimeStep 
+  
+   call ESMF_TimeGet(CurrTime, yy=yr, mm=mon, dd=day, s=tod )
+
+   IF ( Present(NumRingingAlarms) ) NumRingingAlarms = 0
+!!!----FLamraoui
+            IF ( mod(tod,21600) == 5400 .AND. present(is_atm) ) THEN
+                IF ( do_restart ) THEN
+                    do_restart=.False.
+                    
+                ELSE
+                    do_restart=.True.
+                    
+                END IF
+            END IF
+!!!----FLamraoui
+
+AdvanceTime=clock%clockint%CurrTime
+
+if (mod(tod,21600) == 0 .AND. .NOT. is_ocean2) then
+    restart_done=.FALSE.
+end if
+
+if (restart_done) then
+    did_restart=1
+else
+    did_restart=0
+end if
+
+ count_restart=8*((yr-1979)*365 + sum(monarray(1:(mon-1)))+day-1)+(tod/21600)+did_restart
+
+if (present(start_ymd)) then
+    start_y=start_ymd/10000
+    start_m=(start_ymd-start_y*10000)/100
+    start_d=(start_ymd-start_y*10000-start_m*100)
+    count_restart=count_restart-(8*((start_y-1979)*365 + sum(monarray(1:(start_m-1)))+start_d-1))-start_tod/21600
+
+end if
+
+if (.not. is_ocean2) then
+do n=1, count_restart*6
+    AdvanceTime=AdvanceTime+clock%clockint%TimeStep
+end do
+end if
+
+if (is_ocean2) then
+do n=1, count_restart
+    AdvanceTime=AdvanceTime+clock%clockint%TimeStep
+end do
+end if
+else
+    AdvanceTime=clock%clockint%CurrTime
+end if ! end added - sweidman
+
     DO i = 1, MAX_ALARMS
        alarm = clock%clockint%AlarmList(i)
        ! TBH:  This is really dangerous.  We need to be able to NULLIFY
@@ -954,16 +1131,16 @@ contains
              IF ( alarm%alarmint%RingIntervalSet ) THEN
                 pred1 = .FALSE. ; pred2 = .FALSE. ; pred3 = .FALSE.
                 IF ( alarm%alarmint%StopTimeSet ) THEN
-                   PRED1 = clock%clockint%CurrTime > alarm%alarmint%StopTime
+                   PRED1 = AdvanceTime > alarm%alarmint%StopTime ! changing current time to AdvanceTime - sweidman
                 ENDIF
                 IF ( alarm%alarmint%RingTimeSet ) THEN
-                   PRED2 = ( alarm%alarmint%RingTime <= clock%clockint%CurrTime     &
-                        .AND. clock%clockint%CurrTime < alarm%alarmint%RingTime + &
+                   PRED2 = ( alarm%alarmint%RingTime <= AdvanceTime     &
+                        .AND. AdvanceTime < alarm%alarmint%RingTime + &
                         clock%clockint%TimeStep )
                 ENDIF
                 IF ( alarm%alarmint%RingIntervalSet ) THEN
                    PRED3 = ( alarm%alarmint%PrevRingTime + alarm%alarmint%RingInterval <= &
-                        clock%clockint%CurrTime )
+                        AdvanceTime )
                 ENDIF
                 IF ( ( .NOT. ( pred1 ) ) .AND. &
                      ( ( pred2 ) .OR. ( pred3 ) ) ) THEN
@@ -977,7 +1154,7 @@ contains
                    ENDIF
                 ENDIF
              ELSE IF ( alarm%alarmint%RingTimeSet ) THEN
-                IF ( alarm%alarmint%RingTime <= clock%clockint%CurrTime ) THEN
+                IF ( alarm%alarmint%RingTime <= AdvanceTime ) THEN
                    alarm%alarmint%Ringing = .TRUE.
                    IF ( PRESENT( RingingAlarmList ) .AND. &
                         PRESENT ( NumRingingAlarms ) ) THEN
@@ -1245,3 +1422,4 @@ contains
   !------------------------------------------------------------------------------
 
 end module ESMF_ClockMod
+

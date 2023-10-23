@@ -40,6 +40,7 @@ module cime_comp_mod
   use mct_mod            ! mct_ wrappers for mct lib
   use perf_mod
   use ESMF
+  use ESMF_TimeMod ! added - sweidman
 
   !----------------------------------------------------------------------------
   ! component model interfaces (init, run, final methods)
@@ -281,6 +282,10 @@ module cime_comp_mod
   integer  :: month                  ! Current date (MM)
   integer  :: day                    ! Current date (DD)
   integer  :: tod                    ! Current time of day (seconds)
+  integer,save :: yearsave=1  ! added - sweidman
+  integer,save :: monthsave=1
+  integer,save :: daysave=1
+  integer,save :: todsave=0 ! end add
   integer  :: ymdtmp                 ! temporary date (YYYYMMDD)
   integer  :: todtmp                 ! temporary time of day (seconds)
   character(CL) :: orb_mode          ! orbital mode
@@ -414,6 +419,7 @@ module cime_comp_mod
 
   logical       :: read_restart      ! local read restart flag
   character(CL) :: rest_file         ! restart file path + filename
+  logical,save  :: do_restart=.True. ! added - sweidman
 
   logical  :: shr_map_dopole         ! logical for dopole in shr_map_mod
   logical  :: domain_check           ! .true.  => check consistency of domains
@@ -3658,6 +3664,20 @@ contains
           call t_drvstopf  ('CPL:RESTART',cplrun=.true.)
        endif
 
+       if ( mod(tod,21600)==0) then ! added - sweidman
+         yearsave=year
+         monthsave=month
+         daysave=day
+         todsave=tod
+       end if
+       if  ( mod(tod,21600)==0) then
+         do_restart=.True.
+       end if
+ 
+       if ( mod(tod,21600)==10800 .AND. do_restart) then    
+         do_restart=.False.
+       end if ! end added
+
        !----------------------------------------------------------
        !| Write history file, only AVs on CPLID
        !----------------------------------------------------------
@@ -4244,3 +4264,4 @@ contains
   end subroutine cime_cpl_init
 
 end module cime_comp_mod
+
