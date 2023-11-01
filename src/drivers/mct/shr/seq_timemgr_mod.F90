@@ -1322,11 +1322,19 @@ contains
     character(len=*), parameter :: subname = '(seq_timemgr_clockAdvance) '
     integer :: n
     type(ESMF_Time) :: NextAlarm              ! Next restart alarm time
+    type(ESMF_Time) :: continue_time          ! added - sweidman
     integer :: rc    ! Return code
+    integer :: continue_ymd
+    integer :: continue_tod
 
     !-------------------------------------------------------------------------------
     ! Notes:
     !-------------------------------------------------------------------------------
+    
+    ! added - sweidman
+    call ESMF_ClockGet( SyncClock%ECP(seq_timemgr_nclock_drv)%EClock, continuetime=continue_time,rc=rc ) 
+    call seq_timemgr_ETimeGet( continue_time, ymd=continue_ymd,tod=continue_tod) 
+    ! end added
 
     ! --- set datestop alarm to force_stop alarm ---
 
@@ -1352,48 +1360,48 @@ contains
 
     ! --- advance driver clock and all driver alarms ---
 
-    call ESMF_ClockAdvance( SyncClock%ECP(seq_timemgr_nclock_drv)%EClock, rc=rc )
+    call ESMF_ClockAdvance( SyncClock%ECP(seq_timemgr_nclock_drv)%EClock, rc=rc, start_ymd=continue_ymd,start_tod=continue_tod) ! sweid add continue vars
     call seq_timemgr_ESMFCodeCheck( rc, msg=subname//"Error from drv ESMF_ClockAdvance")
 
     ! --- advance other clocks if driver component run alarm is ringing ---
 
     if (ESMF_AlarmIsRinging(SyncClock%EAlarm(seq_timemgr_nclock_drv,seq_timemgr_nalarm_atmrun))) then
-       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_atm)%EClock, rc=rc )
+       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_atm)%EClock, rc=rc, is_atm=.TRUE.,start_ymd=continue_ymd,start_tod=continue_tod) ! added
        call seq_timemgr_ESMFCodeCheck(rc, msg=subname//"Error from atm ESMF_ClockAdvance")
     endif
 
     if (ESMF_AlarmIsRinging(SyncClock%EAlarm(seq_timemgr_nclock_drv,seq_timemgr_nalarm_lndrun))) then
-       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_lnd)%EClock, rc=rc )
+       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_lnd)%EClock, rc=rc, start_ymd=continue_ymd,start_tod=continue_tod) ! added
        call seq_timemgr_ESMFCodeCheck(rc, msg=subname//"Error from lnd ESMF_ClockAdvance")
     endif
 
     if (ESMF_AlarmIsRinging(SyncClock%EAlarm(seq_timemgr_nclock_drv,seq_timemgr_nalarm_rofrun))) then
-       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_rof)%EClock, rc=rc )
+       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_rof)%EClock, rc=rc, is_ocean=.TRUE.,start_ymd=continue_ymd,start_tod=continue_tod) ! added
        call seq_timemgr_ESMFCodeCheck(rc, msg=subname//"Error from rof ESMF_ClockAdvance")
     endif
 
     if (ESMF_AlarmIsRinging(SyncClock%EAlarm(seq_timemgr_nclock_drv,seq_timemgr_nalarm_ocnrun))) then
-       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_ocn)%EClock, rc=rc )
+       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_ocn)%EClock, rc=rc, start_ymd=continue_ymd,start_tod=continue_tod) ! added
        call seq_timemgr_ESMFCodeCheck(rc, msg=subname//"Error from ocn ESMF_ClockAdvance")
     endif
 
     if (ESMF_AlarmIsRinging(SyncClock%EAlarm(seq_timemgr_nclock_drv,seq_timemgr_nalarm_icerun))) then
-       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_ice)%EClock, rc=rc )
+       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_ice)%EClock, rc=rc, start_ymd=continue_ymd,start_tod=continue_tod) ! added
        call seq_timemgr_ESMFCodeCheck(rc, msg=subname//"Error from ice ESMF_ClockAdvance")
     endif
 
     if (ESMF_AlarmIsRinging(SyncClock%EAlarm(seq_timemgr_nclock_drv,seq_timemgr_nalarm_glcrun))) then
-       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_glc)%EClock, rc=rc )
+       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_glc)%EClock, rc=rc, is_ocean=.TRUE.,start_ymd=continue_ymd,start_tod=continue_tod) ! added
        call seq_timemgr_ESMFCodeCheck(rc, msg=subname//"Error from glc ESMF_ClockAdvance")
     endif
 
     if (ESMF_AlarmIsRinging(SyncClock%EAlarm(seq_timemgr_nclock_drv,seq_timemgr_nalarm_wavrun))) then
-       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_wav)%EClock, rc=rc )
+       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_wav)%EClock, rc=rc, start_ymd=continue_ymd,start_tod=continue_tod) ! added 
        call seq_timemgr_ESMFCodeCheck(rc, msg=subname//"Error from wav ESMF_ClockAdvance")
     endif
 
     if (ESMF_AlarmIsRinging(SyncClock%EAlarm(seq_timemgr_nclock_drv,seq_timemgr_nalarm_esprun))) then
-       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_esp)%EClock, rc=rc )
+       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_esp)%EClock, rc=rc, start_ymd=continue_ymd,start_tod=continue_tod) ! added
        call seq_timemgr_ESMFCodeCheck(rc, msg=subname//"Error from esp ESMF_ClockAdvance")
     endif
 
@@ -2426,8 +2434,10 @@ contains
     ! ------ Advance clock to the current time (in case of a restart) -------
     call ESMF_ClockGet(EClock, currTime=clocktime, rc=rc )
     call seq_timemgr_ESMFCodeCheck(rc, subname//': Error from ESMF_ClockGet')
+    call ESMF_ClockSet(EClock, continueTime=currTime, rc=rc ) ! added - sweid
+    call seq_timemgr_ESMFCodeCheck(rc, subname//': Error from ESMF_ClockSet') ! added - sweid
     do while( clocktime < CurrTime)
-       call ESMF_ClockAdvance( EClock, rc=rc )
+       call ESMF_ClockAdvance( EClock, rc=rc, is_initial=.TRUE.) ! added
        call seq_timemgr_ESMFCodeCheck(rc, subname//': Error from ESMF_ClockAdvance')
        call ESMF_ClockGet( EClock, currTime=clocktime )
        call seq_timemgr_ESMFCodeCheck(rc, subname//': Error from ESMF_ClockGet')
