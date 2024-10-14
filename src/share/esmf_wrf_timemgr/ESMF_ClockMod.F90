@@ -72,7 +72,7 @@ module ESMF_ClockMod
      ! as hideous as it might be because the ESMF_Alarm type
      ! has data members that are all POINTERs (thus the horrible
      ! shallow-copy-masquerading-as-reference-copy hack works).
-     type(ESMF_Alarm), pointer, dimension(:) :: AlarmList  ! deleted null() sweidman
+     type(ESMF_Alarm), pointer, dimension(:) :: AlarmList => null() 
   end type ESMF_ClockInt
 
   ! Actual public type:  this bit allows easy mimic of "deep" ESMF_ClockCreate
@@ -80,7 +80,7 @@ module ESMF_ClockMod
   ! NOTE:  DO NOT ADD NON-POINTER STATE TO THIS DATA TYPE.  It emulates ESMF
   !        shallow-copy-masquerading-as-reference-copy.
   type ESMF_Clock
-     type(ESMF_ClockInt), pointer  :: clockint  ! deleted null() sweidman
+     type(ESMF_ClockInt), pointer  :: clockint => null() 
   end type ESMF_Clock
 
   !------------------------------------------------------------------------------
@@ -320,7 +320,7 @@ contains
     ! !ARGUMENTS:
     type(ESMF_Clock), intent(in) :: clock
     type(ESMF_Time), intent(out), optional :: StartTime
-    type(ESMF_Time), intent(out), optional :: ContinueTime
+    type(ESMF_Time), intent(out), optional :: ContinueTime ! added - sweidman
     type(ESMF_Time), intent(out), optional :: CurrTime
     type(ESMF_Time), intent(out), optional :: StopTime
     type(ESMF_Time), intent(out), optional :: PrevTime
@@ -542,7 +542,7 @@ contains
   subroutine ESMF_ClockSetCurrTime(clock, CurrTime, rc)
 
     ! !ARGUMENTS:
-    type(ESMF_Clock), intent(out) :: clock ! changed to out - sweidman
+    type(ESMF_Clock), intent(inout) :: clock ! changed to out - sweidman
     type(ESMF_Time), intent(in) :: CurrTime
     integer, intent(out), optional :: rc
 
