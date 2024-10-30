@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CIME.tests.SystemTests package &mdash; CIME with documentation about the Replay cime5.6.replay documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5d88beb4"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/pop_ver.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CIME.tests.SystemTests.test_utils package" href="CIME.tests.SystemTests.test_utils.html" />
+    <link rel="prev" title="CIME.tests package" href="CIME.tests.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            CIME with documentation about the Replay
+          </a>
+              <div class="version">
+                cime5.6.replay
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../what_cime/index.html">What is CIME?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../users_guide/index.html">Case Control System Part 1: Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../users_guide/index.html#case-control-system-part-2-configuration-porting-testing-and-use-cases">Case Control System Part 2: Configuration, Porting, Testing and Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_models/index.html">Data Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../driver_cpl/index.html">Driver/Coupler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_cpl/index.html">Building a Coupled Model with CIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc_tools/index.html">Miscellaneous Tools</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../glossary/index.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tools_user/index.html">User Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../xml_files/index.html">XML Files</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">CIME</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="CIME.html">CIME package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="CIME.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="CIME.BuildTools.html">CIME.BuildTools package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CIME.Servers.html">CIME.Servers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CIME.SystemTests.html">CIME.SystemTests package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CIME.XML.html">CIME.XML package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CIME.case.html">CIME.case package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="CIME.tests.html">CIME.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.aprun">CIME.aprun module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.bless_test_results">CIME.bless_test_results module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.build">CIME.build module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.buildlib">CIME.buildlib module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.buildnml">CIME.buildnml module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.code_checker">CIME.code_checker module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.compare_namelists">CIME.compare_namelists module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.compare_test_results">CIME.compare_test_results module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.date">CIME.date module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.get_timing">CIME.get_timing module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.hist_utils">CIME.hist_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.locked_files">CIME.locked_files module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.namelist">CIME.namelist module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.nmlgen">CIME.nmlgen module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.provenance">CIME.provenance module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.simple_compare">CIME.simple_compare module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.test_scheduler">CIME.test_scheduler module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.test_status">CIME.test_status module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.test_utils">CIME.test_utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.user_mod_support">CIME.user_mod_support module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.utils">CIME.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME.wait_for_tests">CIME.wait_for_tests module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CIME.html#module-CIME">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Tools_api/modules.html">Tools</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CIME with documentation about the Replay</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">CIME</a></li>
+          <li class="breadcrumb-item"><a href="CIME.html">CIME package</a></li>
+          <li class="breadcrumb-item"><a href="CIME.tests.html">CIME.tests package</a></li>
+      <li class="breadcrumb-item active">CIME.tests.SystemTests package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/CIME_api/CIME.tests.SystemTests.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cime-tests-systemtests-package">
+<h1>CIME.tests.SystemTests package<a class="headerlink" href="#cime-tests-systemtests-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CIME.tests.SystemTests.test_utils.html">CIME.tests.SystemTests.test_utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CIME.tests.SystemTests.test_utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CIME.tests.SystemTests.test_utils.html#module-CIME.tests.SystemTests.test_utils.test_user_nl_utils">CIME.tests.SystemTests.test_utils.test_user_nl_utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CIME.tests.SystemTests.test_utils.html#CIME.tests.SystemTests.test_utils.test_user_nl_utils.TestUserNLCopier"><code class="docutils literal notranslate"><span class="pre">TestUserNLCopier</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="CIME.tests.SystemTests.test_utils.html#CIME.tests.SystemTests.test_utils.test_user_nl_utils.TestUserNLCopier.assertFileContentsEqual"><code class="docutils literal notranslate"><span class="pre">TestUserNLCopier.assertFileContentsEqual()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="CIME.tests.SystemTests.test_utils.html#CIME.tests.SystemTests.test_utils.test_user_nl_utils.TestUserNLCopier.setUp"><code class="docutils literal notranslate"><span class="pre">TestUserNLCopier.setUp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="CIME.tests.SystemTests.test_utils.html#CIME.tests.SystemTests.test_utils.test_user_nl_utils.TestUserNLCopier.tearDown"><code class="docutils literal notranslate"><span class="pre">TestUserNLCopier.tearDown()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="CIME.tests.SystemTests.test_utils.html#CIME.tests.SystemTests.test_utils.test_user_nl_utils.TestUserNLCopier.test_append"><code class="docutils literal notranslate"><span class="pre">TestUserNLCopier.test_append()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="CIME.tests.SystemTests.test_utils.html#CIME.tests.SystemTests.test_utils.test_user_nl_utils.TestUserNLCopier.test_append_multiple_files"><code class="docutils literal notranslate"><span class="pre">TestUserNLCopier.test_append_multiple_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="CIME.tests.SystemTests.test_utils.html#CIME.tests.SystemTests.test_utils.test_user_nl_utils.TestUserNLCopier.test_append_without_files_raises_exception"><code class="docutils literal notranslate"><span class="pre">TestUserNLCopier.test_append_without_files_raises_exception()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="CIME.tests.SystemTests.test_utils.html#CIME.tests.SystemTests.test_utils.test_user_nl_utils.TestUserNLCopier.write_user_nl_file"><code class="docutils literal notranslate"><span class="pre">TestUserNLCopier.write_user_nl_file()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="CIME.tests.SystemTests.test_utils.html#module-CIME.tests.SystemTests.test_utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-CIME.tests.SystemTests.test_system_tests_compare_two">
+<span id="cime-tests-systemtests-test-system-tests-compare-two-module"></span><h2>CIME.tests.SystemTests.test_system_tests_compare_two module<a class="headerlink" href="#module-CIME.tests.SystemTests.test_system_tests_compare_two" title="Link to this heading"></a></h2>
+<p>This module contains unit tests of the core logic in SystemTestsCompareTwo.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.Call">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">CIME.tests.SystemTests.test_system_tests_compare_two.</span></span><span class="sig-name descname"><span class="pre">Call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.Call" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.Call.arguments">
+<span class="sig-name descname"><span class="pre">arguments</span></span><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.Call.arguments" title="Link to this definition"></a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.Call.method">
+<span class="sig-name descname"><span class="pre">method</span></span><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.Call.method" title="Link to this definition"></a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.SystemTestsCompareTwoFake">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">CIME.tests.SystemTests.test_system_tests_compare_two.</span></span><span class="sig-name descname"><span class="pre">SystemTestsCompareTwoFake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">case1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_one_suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'base'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_two_suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'test'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separate_builds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multisubmit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">case2setup_raises_exception</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_one_should_pass</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_two_should_pass</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare_should_pass</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#SystemTestsCompareTwoFake"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.SystemTestsCompareTwoFake" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="CIME.SystemTests.html#CIME.SystemTests.system_tests_compare_two.SystemTestsCompareTwo" title="CIME.SystemTests.system_tests_compare_two.SystemTestsCompareTwo"><code class="xref py py-class docutils literal notranslate"><span class="pre">SystemTestsCompareTwo</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.SystemTestsCompareTwoFake.run_indv">
+<span class="sig-name descname"><span class="pre">run_indv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'base'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">st_archive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#SystemTestsCompareTwoFake.run_indv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.SystemTestsCompareTwoFake.run_indv" title="Link to this definition"></a></dt>
+<dd><p>This fake implementation appends to the log and raises an exception if
+it’s supposed to</p>
+<p>Note that the Call object appended to the log has the current CASE name
+in addition to the method arguments. (This is mainly to ensure that the
+proper suffix is used for the proper case, but this extra check can be
+removed if it’s a maintenance problem.)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">CIME.tests.SystemTests.test_system_tests_compare_two.</span></span><span class="sig-name descname"><span class="pre">TestSystemTestsCompareTwo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#TestSystemTestsCompareTwo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.get_caseroots">
+<span class="sig-name descname"><span class="pre">get_caseroots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">casename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mytest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#TestSystemTestsCompareTwo.get_caseroots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.get_caseroots" title="Link to this definition"></a></dt>
+<dd><p>Returns a tuple (case1root, case2root)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.get_compare_phase_name">
+<span class="sig-name descname"><span class="pre">get_compare_phase_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mytest</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#TestSystemTestsCompareTwo.get_compare_phase_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.get_compare_phase_name" title="Link to this definition"></a></dt>
+<dd><p>Returns a string giving the compare phase name for this test</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.setUp">
+<span class="sig-name descname"><span class="pre">setUp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#TestSystemTestsCompareTwo.setUp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.setUp" title="Link to this definition"></a></dt>
+<dd><p>Hook method for setting up the test fixture before exercising it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.tearDown">
+<span class="sig-name descname"><span class="pre">tearDown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#TestSystemTestsCompareTwo.tearDown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.tearDown" title="Link to this definition"></a></dt>
+<dd><p>Hook method for deconstructing the test fixture after testing it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_compare_fails">
+<span class="sig-name descname"><span class="pre">test_compare_fails</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#TestSystemTestsCompareTwo.test_compare_fails"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_compare_fails" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_compare_passes">
+<span class="sig-name descname"><span class="pre">test_compare_passes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#TestSystemTestsCompareTwo.test_compare_passes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_compare_passes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_run1_fails">
+<span class="sig-name descname"><span class="pre">test_run1_fails</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#TestSystemTestsCompareTwo.test_run1_fails"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_run1_fails" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_run2_fails">
+<span class="sig-name descname"><span class="pre">test_run2_fails</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#TestSystemTestsCompareTwo.test_run2_fails"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_run2_fails" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_run_phase_internal_calls">
+<span class="sig-name descname"><span class="pre">test_run_phase_internal_calls</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#TestSystemTestsCompareTwo.test_run_phase_internal_calls"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_run_phase_internal_calls" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_run_phase_internal_calls_multisubmit_phase1">
+<span class="sig-name descname"><span class="pre">test_run_phase_internal_calls_multisubmit_phase1</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#TestSystemTestsCompareTwo.test_run_phase_internal_calls_multisubmit_phase1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_run_phase_internal_calls_multisubmit_phase1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_run_phase_internal_calls_multisubmit_phase2">
+<span class="sig-name descname"><span class="pre">test_run_phase_internal_calls_multisubmit_phase2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#TestSystemTestsCompareTwo.test_run_phase_internal_calls_multisubmit_phase2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_run_phase_internal_calls_multisubmit_phase2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_run_phase_passes">
+<span class="sig-name descname"><span class="pre">test_run_phase_passes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#TestSystemTestsCompareTwo.test_run_phase_passes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_run_phase_passes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_setup">
+<span class="sig-name descname"><span class="pre">test_setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#TestSystemTestsCompareTwo.test_setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_setup" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_setup_case2_exists">
+<span class="sig-name descname"><span class="pre">test_setup_case2_exists</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#TestSystemTestsCompareTwo.test_setup_case2_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_setup_case2_exists" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_setup_error">
+<span class="sig-name descname"><span class="pre">test_setup_error</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#TestSystemTestsCompareTwo.test_setup_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_setup_error" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_setup_separate_builds_sharedlibroot">
+<span class="sig-name descname"><span class="pre">test_setup_separate_builds_sharedlibroot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two.html#TestSystemTestsCompareTwo.test_setup_separate_builds_sharedlibroot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two.TestSystemTestsCompareTwo.test_setup_separate_builds_sharedlibroot" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output">
+<span id="cime-tests-systemtests-test-system-tests-compare-two-link-to-case2-output-module"></span><h2>CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output module<a class="headerlink" href="#module-CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output" title="Link to this heading"></a></h2>
+<p>This module contains unit tests of the method
+SystemTestsCompareTwo._link_to_case2_output</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output.SystemTestsCompareTwoFake">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output.</span></span><span class="sig-name descname"><span class="pre">SystemTestsCompareTwoFake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">case1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_two_suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'test'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two_link_to_case2_output.html#SystemTestsCompareTwoFake"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output.SystemTestsCompareTwoFake" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="CIME.SystemTests.html#CIME.SystemTests.system_tests_compare_two.SystemTestsCompareTwo" title="CIME.SystemTests.system_tests_compare_two.SystemTestsCompareTwo"><code class="xref py py-class docutils literal notranslate"><span class="pre">SystemTestsCompareTwo</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output.TestLinkToCase2Output">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output.</span></span><span class="sig-name descname"><span class="pre">TestLinkToCase2Output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two_link_to_case2_output.html#TestLinkToCase2Output"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output.TestLinkToCase2Output" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output.TestLinkToCase2Output.create_file_in_rundir2">
+<span class="sig-name descname"><span class="pre">create_file_in_rundir2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mytest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">core_filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run2_suffix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two_link_to_case2_output.html#TestLinkToCase2Output.create_file_in_rundir2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output.TestLinkToCase2Output.create_file_in_rundir2" title="Link to this definition"></a></dt>
+<dd><p>Creates a file in rundir2 named CASE2.CORE_FILENAME.nc.RUN2_SUFFIX
+(where CASE2 is the casename of case2)</p>
+<p>Returns full path to the file created</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output.TestLinkToCase2Output.setUp">
+<span class="sig-name descname"><span class="pre">setUp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two_link_to_case2_output.html#TestLinkToCase2Output.setUp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output.TestLinkToCase2Output.setUp" title="Link to this definition"></a></dt>
+<dd><p>Hook method for setting up the test fixture before exercising it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output.TestLinkToCase2Output.setup_test_and_directories">
+<span class="sig-name descname"><span class="pre">setup_test_and_directories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">casename1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run2_suffix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two_link_to_case2_output.html#TestLinkToCase2Output.setup_test_and_directories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output.TestLinkToCase2Output.setup_test_and_directories" title="Link to this definition"></a></dt>
+<dd><p>Returns test object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output.TestLinkToCase2Output.tearDown">
+<span class="sig-name descname"><span class="pre">tearDown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two_link_to_case2_output.html#TestLinkToCase2Output.tearDown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output.TestLinkToCase2Output.tearDown" title="Link to this definition"></a></dt>
+<dd><p>Hook method for deconstructing the test fixture after testing it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output.TestLinkToCase2Output.test_basic">
+<span class="sig-name descname"><span class="pre">test_basic</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two_link_to_case2_output.html#TestLinkToCase2Output.test_basic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output.TestLinkToCase2Output.test_basic" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output.TestLinkToCase2Output.test_existing_link">
+<span class="sig-name descname"><span class="pre">test_existing_link</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/CIME/tests/SystemTests/test_system_tests_compare_two_link_to_case2_output.html#TestLinkToCase2Output.test_existing_link"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#CIME.tests.SystemTests.test_system_tests_compare_two_link_to_case2_output.TestLinkToCase2Output.test_existing_link" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-CIME.tests.SystemTests">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-CIME.tests.SystemTests" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="CIME.tests.html" class="btn btn-neutral float-left" title="CIME.tests package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CIME.tests.SystemTests.test_utils.html" class="btn btn-neutral float-right" title="CIME.tests.SystemTests.test_utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2017, U.S. National Science Foundation and U.S. Department of Energy.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+     
+<script>var version_json_loc = "../../../versions.json";</script>
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
