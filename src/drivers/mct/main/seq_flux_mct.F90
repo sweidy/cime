@@ -7,6 +7,11 @@ module seq_flux_mct
   use shr_mct_mod,       only: shr_mct_queryConfigFile, shr_mct_sMatReaddnc
 
   use mct_mod
+#ifdef USE_ESMF_LIB
+  use esmf
+#else
+  use esmf, only: ESMF_clock
+#endif
   use seq_flds_mod
   use seq_comm_mct
   use seq_infodata_mod
@@ -148,6 +153,10 @@ module seq_flux_mct
   integer :: index_xao_So_avsdf
   integer :: index_xao_So_anidr
   integer :: index_xao_So_anidf
+  integer :: index_xao_So_old_avsdr
+  integer :: index_xao_So_old_avsdf
+  integer :: index_xao_So_old_anidr
+  integer :: index_xao_So_old_anidf
   integer :: index_xao_Faox_taux
   integer :: index_xao_Faox_tauy
   integer :: index_xao_Faox_lat
@@ -735,8 +744,9 @@ contains
 
   !===============================================================================
 
-  subroutine seq_flux_ocnalb_mct( infodata, ocn, a2x_o, fractions_o, xao_o )
+  subroutine seq_flux_ocnalb_mct( infodata, ocn, a2x_o, fractions_o, xao_o, EClock )
 
+   use seq_timemgr_mod, only : seq_timemgr_eclockgetdata
     !-----------------------------------------------------------------------
     !
     ! Arguments
@@ -746,6 +756,8 @@ contains
     type(mct_aVect)         , intent(in)    :: a2x_o
     type(mct_aVect)         , intent(inout) :: fractions_o
     type(mct_aVect)         , intent(inout) :: xao_o
+    type(ESMF_Clock), optional   , intent(in)    :: EClock
+
     !
     ! Local variables
     !
@@ -774,6 +786,19 @@ contains
     integer(in)         :: klat,klon       ! field indices
     logical             :: update_alb           ! was albedo updated
     logical,save        :: first_call = .true.
+
+    integer :: curr_ymd           ! Current date (YYYYMMDD)
+    integer :: curr_tod           ! Current time of day (s)
+    logical, save :: do_restart=.false. 
+    logical, save :: first_time = .true.
+    real(r8)            :: anidr_old                ! albedo: near infrared, direct
+    real(r8)            :: avsdr_old                ! albedo: visible      , direct
+    real(r8)            :: anidf_old                ! albedo: near infrared, diffuse
+    real(r8)            :: avsdf_old                ! albedo: visible 
+    real(r8)            :: cday_now
+    real(r8)            :: delta_now  
+
+
     !
     character(*),parameter :: subName =   '(seq_flux_ocnalb_mct) '
     !
@@ -783,8 +808,6 @@ contains
 
     call seq_infodata_getData(infodata , &
          flux_albav=flux_albav)
-
-    ! Determine indices
 
     update_alb = .false.
 
@@ -796,6 +819,10 @@ contains
        index_xao_So_anidf  = mct_aVect_indexRA(xao_o,'So_anidf')
        index_xao_So_avsdr  = mct_aVect_indexRA(xao_o,'So_avsdr')
        index_xao_So_avsdf  = mct_aVect_indexRA(xao_o,'So_avsdf')
+       index_xao_So_old_anidr  = mct_aVect_indexRA(xao_o,'So_old_anidr')
+       index_xao_So_old_anidf  = mct_aVect_indexRA(xao_o,'So_old_anidf')
+       index_xao_So_old_avsdr  = mct_aVect_indexRA(xao_o,'So_old_avsdr')
+       index_xao_So_old_avsdf  = mct_aVect_indexRA(xao_o,'So_old_avsdf')
        index_xao_Faox_swdn = mct_aVect_indexRA(xao_o,'Faox_swdn')
        index_xao_Faox_swup = mct_aVect_indexRA(xao_o,'Faox_swup')
 
@@ -902,6 +929,43 @@ contains
           update_alb = .true.
        endif    ! nextsw_cday
     end if   ! flux_albav
+
+    if (present(EClock)) then
+    call seq_timemgr_EClockGetData(EClock,               &
+    curr_ymd=curr_ymd, curr_tod=curr_tod)
+
+    if ( mod(curr_tod,21600)==10800 .AND. do_restart) then
+
+      ! if (first_time) then
+      !    first_time=.FALSE.
+      ! else
+
+      do n=1,nloc_o
+          xao_o%rAttr(index_xao_So_avsdr,n) = xao_o%rAttr(index_xao_So_old_avsdr,n)
+          xao_o%rAttr(index_xao_So_anidr,n) = xao_o%rAttr(index_xao_So_old_anidr,n)
+          xao_o%rAttr(index_xao_So_avsdf,n) = xao_o%rAttr(index_xao_So_old_avsdf,n)
+          xao_o%rAttr(index_xao_So_anidf,n) = xao_o%rAttr(index_xao_So_old_anidf,n)
+      end do
+      ! end if ! first time
+
+      do_restart=.FALSE.
+      !nextsw_cday = -1 ! in ice here
+
+   end if
+
+   if ( mod(curr_tod,21600)==0 .and. .not. do_restart ) then
+
+      do n = 1, nloc_o
+         xao_o%rAttr(index_xao_So_old_anidr,n) = xao_o%rAttr(index_xao_So_anidr,n)
+         xao_o%rAttr(index_xao_So_old_avsdr,n) = xao_o%rAttr(index_xao_So_avsdr,n)
+         xao_o%rAttr(index_xao_So_old_anidf,n) = xao_o%rAttr(index_xao_So_anidf,n)
+         xao_o%rAttr(index_xao_So_old_avsdf,n) = xao_o%rAttr(index_xao_So_avsdf,n)
+      end do
+      do_restart=.TRUE.
+
+   end if
+   end if ! if present EClock
+
     !--- update current ifrad/ofrad values if albedo was updated
 
     if (update_alb) then

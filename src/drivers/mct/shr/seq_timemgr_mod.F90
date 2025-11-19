@@ -1376,7 +1376,7 @@ contains
     endif
 
     if (ESMF_AlarmIsRinging(SyncClock%EAlarm(seq_timemgr_nclock_drv,seq_timemgr_nalarm_rofrun))) then
-       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_rof)%EClock, rc=rc, is_ocean=.TRUE.,start_ymd=continue_ymd,start_tod=continue_tod) ! added
+       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_rof)%EClock, rc=rc,start_ymd=continue_ymd,start_tod=continue_tod) ! added
        call seq_timemgr_ESMFCodeCheck(rc, msg=subname//"Error from rof ESMF_ClockAdvance")
     endif
 
@@ -1391,7 +1391,7 @@ contains
     endif
 
     if (ESMF_AlarmIsRinging(SyncClock%EAlarm(seq_timemgr_nclock_drv,seq_timemgr_nalarm_glcrun))) then
-       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_glc)%EClock, rc=rc, is_ocean=.TRUE.,start_ymd=continue_ymd,start_tod=continue_tod) ! added
+       call ESMF_ClockAdvance(SyncClock%ECP(seq_timemgr_nclock_glc)%EClock, rc=rc,start_ymd=continue_ymd,start_tod=continue_tod) ! added
        call seq_timemgr_ESMFCodeCheck(rc, msg=subname//"Error from glc ESMF_ClockAdvance")
     endif
 

@@ -967,6 +967,7 @@ contains
     call seq_flds_add(i2x_states,"Si_avsdr")
     call seq_flds_add(l2x_states,"Sl_avsdr")
     call seq_flds_add(xao_albedo,"So_avsdr")
+    call seq_flds_add(xao_albedo,"So_old_avsdr")
     call seq_flds_add(x2a_states,"Sx_avsdr")
     longname = 'Direct albedo (visible radiation)'
     stdname  = 'surface_direct_albedo_due_to_visible_radiation'
@@ -984,6 +985,7 @@ contains
     call seq_flds_add(i2x_states,"Si_anidr")
     call seq_flds_add(l2x_states,"Sl_anidr")
     call seq_flds_add(xao_albedo,"So_anidr")
+    call seq_flds_add(xao_albedo,"So_old_anidr")
     call seq_flds_add(x2a_states,"Sx_anidr")
     longname = 'Direct albedo (near-infrared radiation)'
     stdname  = 'surface_direct_albedo_due_to_near_infrared_radiation'
@@ -1001,6 +1003,7 @@ contains
     call seq_flds_add(i2x_states,"Si_avsdf")
     call seq_flds_add(l2x_states,"Sl_avsdf")
     call seq_flds_add(xao_albedo,"So_avsdf")
+    call seq_flds_add(xao_albedo,"So_old_avsdf")
     call seq_flds_add(x2a_states,"Sx_avsdf")
     longname = 'Diffuse albedo (visible radiation)'
     stdname  = 'surface_diffuse_albedo_due_to_visible_radiation'
@@ -1018,6 +1021,7 @@ contains
     call seq_flds_add(i2x_states,"Si_anidf")
     call seq_flds_add(l2x_states,"Sl_anidf")
     call seq_flds_add(xao_albedo,"So_anidf")
+    call seq_flds_add(xao_albedo,"So_old_anidf")
     call seq_flds_add(x2a_states,"Sx_anidf")
     longname = 'Diffuse albedo (near-infrared radiation)'
     stdname  = 'surface_diffuse_albedo_due_to_near_infrared_radiation'
